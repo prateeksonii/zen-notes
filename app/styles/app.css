@@ -551,10 +551,6 @@ video {
   position: fixed;
 }
 
-.top-5 {
-  top: 1.25rem;
-}
-
 .left-0 {
   left: 0px;
 }
@@ -563,8 +559,8 @@ video {
   right: 0px;
 }
 
-.top-0 {
-  top: 0px;
+.top-5 {
+  top: 1.25rem;
 }
 
 .z-10 {
@@ -600,6 +596,14 @@ video {
   height: calc(100vh - 4rem);
 }
 
+.h-full {
+  height: 100%;
+}
+
+.h-screen {
+  height: 100vh;
+}
+
 .min-h-\[400px\] {
   min-height: 400px;
 }
@@ -631,6 +635,18 @@ video {
 
 .grid-cols-\[2fr_1fr\] {
   grid-template-columns: 2fr 1fr;
+}
+
+.grid-cols-\[10\%_30\%_60\%\] {
+  grid-template-columns: 10% 30% 60%;
+}
+
+.grid-cols-\[5\%_30\%_60\%\] {
+  grid-template-columns: 5% 30% 60%;
+}
+
+.grid-cols-\[5\%_30\%_65\%\] {
+  grid-template-columns: 5% 30% 65%;
 }
 
 .flex-col {
@@ -673,6 +689,11 @@ video {
   border-radius: 0.5rem;
 }
 
+.bg-gray-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+
 .bg-primary {
   --tw-bg-opacity: 1;
   background-color: rgb(255 133 82 / var(--tw-bg-opacity));
@@ -688,19 +709,14 @@ video {
   background-color: rgb(39 39 42 / var(--tw-bg-opacity));
 }
 
-.bg-white {
+.bg-black {
   --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
 
-.bg-red-500 {
+.bg-zinc-900 {
   --tw-bg-opacity: 1;
-  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
-}
-
-.bg-gray-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+  background-color: rgb(24 24 27 / var(--tw-bg-opacity));
 }
 
 .p-12 {
@@ -783,6 +799,11 @@ video {
   color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
+.text-gray-800 {
+  --tw-text-opacity: 1;
+  color: rgb(31 41 55 / var(--tw-text-opacity));
+}
+
 .text-primary {
   --tw-text-opacity: 1;
   color: rgb(255 133 82 / var(--tw-text-opacity));
@@ -793,22 +814,8 @@ video {
   color: rgb(248 113 113 / var(--tw-text-opacity));
 }
 
-.text-white {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.text-gray-800 {
-  --tw-text-opacity: 1;
-  color: rgb(31 41 55 / var(--tw-text-opacity));
-}
-
 .underline-offset-8 {
   text-underline-offset: 8px;
-}
-
-.opacity-0 {
-  opacity: 0;
 }
 
 .transition {
@@ -849,10 +856,6 @@ body {
 
 .hover\:underline:hover {
   text-decoration-line: underline;
-}
-
-.hover\:opacity-100:hover {
-  opacity: 1;
 }
 
 .disabled\:bg-orange-200:disabled {

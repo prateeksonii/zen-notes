@@ -1,19 +1,18 @@
 import { ActionArgs, json, LoaderArgs, redirect } from "@remix-run/node";
-import { Form, useActionData, useCatch, useTransition } from "@remix-run/react";
+import { Form, useActionData, useTransition } from "@remix-run/react";
 import Balancer from "react-wrap-balancer";
 import Nav from "~/components/Nav";
 import Toast from "~/components/Toast";
-import { signUp } from "~/server/auth/index.server";
-import { sessionStorage } from "~/services/session.server";
+import { signIn } from "~/server/auth/index.server";
+import { commitSession, sessionStorage } from "~/services/session.server";
 
 export async function action({ request }: ActionArgs) {
   const body = await request.formData();
 
-  const name = body.get("name") as string;
   const email = body.get("email") as string;
   const password = body.get("password") as string;
 
-  const res = await signUp({ name, email, password });
+  const res = await signIn({ email, password });
 
   if (!res.success) {
     return json(res, {
@@ -21,7 +20,17 @@ export async function action({ request }: ActionArgs) {
     });
   }
 
-  return redirect("/signin");
+  const session = await sessionStorage.getSession(
+    request.headers.get("Cookie")
+  );
+
+  session.set("userId", res.data);
+
+  return redirect("/dashboard", {
+    headers: {
+      "Set-Cookie": await commitSession(session),
+    },
+  });
 }
 
 export async function loader({ request }: LoaderArgs) {
@@ -36,7 +45,7 @@ export async function loader({ request }: LoaderArgs) {
   return {};
 }
 
-export default function SignupPage() {
+export default function SignInPage() {
   const actionData = useActionData<typeof action>();
   const transition = useTransition();
 
@@ -47,7 +56,7 @@ export default function SignupPage() {
         <h1 className="text-5xl leading-tight">
           <Balancer>
             transform your notes with typed -{" "}
-            <span className="text-primary">create an account</span>
+            <span className="text-primary">welcome back!</span>
           </Balancer>
         </h1>
 
@@ -55,20 +64,6 @@ export default function SignupPage() {
           method="post"
           className="w-full flex flex-col gap-2 p-12 bg-zinc-800 rounded"
         >
-          <label htmlFor="name" className="flex w-full flex-col">
-            Name
-            <input
-              type="text"
-              name="name"
-              defaultValue={actionData?.values.name}
-              className="w-full bg-zinc-700 rounded p-2"
-            />
-            {actionData?.formErrors?.name && (
-              <div className="text-sm text-red-400">
-                {actionData.formErrors.name._errors[0]}
-              </div>
-            )}
-          </label>
           <label htmlFor="email" className="flex w-full flex-col">
             Email
             <input
@@ -103,9 +98,9 @@ export default function SignupPage() {
             disabled={transition.state === "submitting"}
           >
             {transition.state === "submitting" ? (
-              <span>Creating...</span>
+              <span>Signing In...</span>
             ) : (
-              "Create account"
+              "Sign In"
             )}
           </button>
           {actionData?.code === 409 && (

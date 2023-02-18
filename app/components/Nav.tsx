@@ -9,10 +9,10 @@ export default function Nav() {
       <div className="flex-1"></div>
       <div>
         <Link
-          to="/login"
+          to="/signin"
           className="rounded-full font-medium text-primary underline-offset-8 transition-all hover:underline"
         >
-          login
+          sign in
         </Link>
       </div>
     </nav>

@@ -5,3 +5,8 @@ export const signUpValidator = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(4, "Password must be more than 4 characters long."),
 });
+
+export const signInValidator = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string(),
+});

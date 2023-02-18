@@ -1,6 +1,20 @@
+import { LoaderArgs, redirect } from "@remix-run/node";
 import { Link } from "@remix-run/react";
 import Balancer from "react-wrap-balancer";
 import Nav from "~/components/Nav";
+import { sessionStorage } from "~/services/session.server";
+
+export async function loader({ request }: LoaderArgs) {
+  const session = await sessionStorage.getSession(
+    request.headers.get("Cookie")
+  );
+
+  if (session.data && session.data.userId) {
+    return redirect("/dashboard");
+  }
+
+  return {};
+}
 
 export default function Home() {
   return (
